@@ -9,19 +9,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "precise64-cloudimg"
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
-  config.vm.network :forwarded_port, guest: 3000, host: 3000
+  config.vm.network :forwarded_port, guest: 3000, host: 3000 # Your app will likely be here
+  config.vm.network :forwarded_port, guest: 8080, host: 8080 # Node inspector
 
-  # config.vm.synced_folder "../data", "/vagrant_data"
+  # Uncomment and modify to whereever you app resides
+  # config.vm.synced_folder "../", "/var/www/my-node-app"
 
   config.vm.provider :virtualbox do |vb|
     vb.name = "nodejs.dev_" + Time::now().strftime("%s")
     vb.gui = false
-    vb.customize ["modifyvm", :id, "--memory", "256"]
+    vb.customize ["modifyvm", :id, "--memory", "512"]
   end
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = "puppet/manifests"
-    puppet.module_path   = "puppet/modules"
+    puppet.module_path    = "puppet/modules"
     puppet.manifest_file  = "init.pp"
   end
 
