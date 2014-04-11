@@ -1,15 +1,6 @@
+# Always update package lists
+stage { "init": before => Stage["main"] }
+class { "apt-update": stage => init }
 
-class { 'nodejs':
-  version => 'v0.10.26',
-  make_install => false
-}
-
-package {"jasmine-node": 
-  provider => "npm",
-  require => Class["nodejs"]
-}
-
-package {"node-inspector":
-  provider => "npm",
-  require => Class["nodejs"]
-}
+class { "mongo": }
+class { "node-dev": }

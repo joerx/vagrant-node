@@ -13,10 +13,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # Node inspector
 
   # Uncomment and modify to whereever you app resides
-  # config.vm.synced_folder "../", "/var/www/my-node-app"
+  config.vm.synced_folder "../", "/home/vagrant/devel/node"
 
   config.vm.provider :virtualbox do |vb|
-    vb.name = "nodejs.dev_" + Time::now().strftime("%s")
+    vb.name = "nodejs-sandbox_" + Time::now().strftime("%s")
     vb.gui = false
     vb.customize ["modifyvm", :id, "--memory", "512"]
   end
